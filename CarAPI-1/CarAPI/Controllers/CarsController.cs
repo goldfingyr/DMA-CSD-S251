@@ -45,7 +45,7 @@ namespace CarAPI.Controllers
         [HttpGet]
         public IActionResult Get_ThisNameDoesNotMatter()
         {
-            using (var connection = new SqlConnection(System.Environment.GetEnvironmentVariable("ConnectionString")))
+            using (var connection = new SqlConnection("Data Source=localhost;Initial Catalog=Technology;User ID=sa;Password=!Password;Trust Server Certificate=True"))
             {
                 connection.Open();
                 try
@@ -53,6 +53,7 @@ namespace CarAPI.Controllers
                     // Return a List<Car>
                     // ***** ADD THE MISSING CODE HERE *****
                     // If the table exists, return the list of cars
+                    return Ok(connection.Query<Car>("SELECT * FROM dbo.Cars").ToList());
                 }
                 catch
                 {
@@ -76,18 +77,37 @@ namespace CarAPI.Controllers
                 // Return a two item List
                 // ***** ADD THE MISSING CODE HERE *****
                 // If the table exists, return the list of cars
+                return Ok(connection.Query<Car>("SELECT * FROM dbo.Cars").ToList());
             }
         }
 
         // GET api/<CarsController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
+        [HttpGet("{licenseplate}")]
+        public IActionResult Get(string licenseplate)
         {
-            return "value";
+            using (var connection = new SqlConnection("Data Source=localhost;Initial Catalog=Technology;User ID=sa;Password=!Password;Trust Server Certificate=True"))
+            {
+                connection.Open();
+                try
+                {
+                    Car theCar = connection.QueryFirst<Car>("SELECT * FROM dbo.Cars WHERE licenseplate=@licenseplate", new
+                    {
+                        licenseplate = licenseplate
+                    });
+                    return Ok(connection.QueryFirst<Car>("SELECT * FROM dbo.Cars WHERE licenseplate=@licenseplate", new
+                    {
+                        licenseplate = licenseplate
+                    }));
+                }
+                catch
+                {
+                    return NotFound($"Car with licenseplate {licenseplate} not found");
+                }
+            }
         }
 
-        // POST api/<CarsController>
-        [HttpPost]
+                // POST api/<CarsController>
+                [HttpPost]
         public void Post([FromBody] string value)
         {
         }
