@@ -11,11 +11,22 @@
         <div id="ajax1date"></div>
     </div>
 </div>
-
-YOUR TASK:
-Make an interface with one functionality:
-- Search for a car using primary key
-
+<div class="row">
+    <div class="col"></div>
+    <div class="col">
+        @if (Model.CarSelected != null)
+        {
+            <h3>Selected car</h3>
+            <p>@Model.CarSelected.licenseplate<br />@Model.CarSelected.make<br />@Model.CarSelected.model<br />@Model.CarSelected.color</p>
+        }
+        <h3>Find car</h3>
+        <form method="post">
+            <input type="text" name="target" />
+            <input type="hidden" name="action" value="findCar" />
+            <input type="submit" value="Submit" />
+        </form>
+    </div>
+</div>
 
 @section Scripts {
     <script>

@@ -12,10 +12,64 @@
     </div>
 </div>
 
-YOUR TASK:
-Make an interface with dual functionality:
-- One part should search for a car using primary key
-- The other part should search for car(s) using a non-primary key attribute (e.g., make, model, color)
+<div class="row">
+    <div class="col" style="background-color:red">
+        <form method="POST">
+            <input type="hidden" name="action" value="findCar" />
+            <input type="text" name="target" />
+            <br />
+            <input type="submit" value="Find Car" />
+        </form>
+        @if (Model.CarSelected != null)
+        {
+            @Model.CarSelected.licenseplate <br />
+            @Model.CarSelected.make <br />
+            @Model.CarSelected.model <br />
+            @Model.CarSelected.color <br />
+        }
+    </div>
+    <div class="col" style="background-color:yellow">
+        <form method="POST">
+            <input type="hidden" name="action" value="findCarByColor" />
+            <input type="text" name="target" />
+            <br />
+            <input type="submit" value="Find Car by Color" />
+        </form>
+        @if (Model.Cars != null)
+        {
+            foreach (var car in Model.Cars)
+            {
+                @car.licenseplate <br />
+                @car.make <br />
+                @car.model <br />
+                @car.color <br />
+                <hr />
+            }
+        }
+    </div>
+    <div class="col" style="background-color:lightblue">
+        <form method="POST">
+            <input type="hidden" name="action" value="datepick" />
+            <input type="text" name="daterange" value="01/11/2026 - 01/12/2026" />
+            <br />
+            <input type="submit" value="Date Pick" />
+        </form>
+        @if (Model.Cars != null)
+        {
+            foreach (var car in Model.Cars)
+            {
+                @car.licenseplate <br />
+                @car.make <br />
+                @car.model <br />
+                @car.color <br />
+                <hr />
+            }
+        }
+    </div>
+</div>
+
+
+
 
 
 @section Scripts {
@@ -42,6 +96,27 @@ Make an interface with dual functionality:
         }
 
         setInterval(functionInterval, 1000);
-    </script>
+
+</script>
+
 }
 
+<script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+
+<script>
+ $(function() {
+    $('input[name="daterange"]').daterangepicker({
+        opens: 'left’
+        },
+        function(start, end, label) {
+            console.log("A new date selection was made: " + start.format('YYYY-MM-DD') + ' to ' + end.format('YYYY-MM-DD'));
+        });
+    });
+</script>
+
+
+@section head {
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+}
