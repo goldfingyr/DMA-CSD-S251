@@ -1,0 +1,46 @@
+﻿@page
+@using UI.Pages
+@model IndexModel
+@Html.AntiForgeryToken()
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="row">
+    <div class="col">
+        <div id="ajax1date"></div>
+    </div>
+</div>
+
+YOUR TASK:
+Make an interface with one functionality:
+- Search for a car using primary key
+
+
+@section Scripts {
+    <script>
+        async function ajax1() {
+            try {
+                const response = await fetch('?handler=ajax1');
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error ${response.status}`);
+                }
+
+                const data = await response.json();
+                document.getElementById('ajax1date').textContent = data.message;
+            }
+            catch (error) {
+                console.error(error);
+                document.getElementById('ajax1date').textContent = 'Error';
+            }
+        }
+
+        function functionInterval() {
+            ajax1();
+        }
+
+        setInterval(functionInterval, 1000);
+    </script>
+}
+
