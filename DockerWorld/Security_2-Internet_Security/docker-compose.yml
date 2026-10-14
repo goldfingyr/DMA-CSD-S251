@@ -2,14 +2,14 @@ services:
 
     # https://www.zaproxy.org/faq/how-can-you-use-zap-to-scan-apis/
     # https://github.com/secureCodeBox/scanner-webapplication-zap
-    zap:
-        image: securecodebox/zap
-        container_name: zap
-        user: zap
-        command: zap-webswing.sh
-        ports:
-            - 8080:8080
-            - 8090:8090
+    # zap:
+        # image: securecodebox/zap
+        # container_name: zap
+        # user: zap
+        # command: zap-webswing.sh
+        # ports:
+            # - 8080:8080
+            # - 8090:8090
 
     testssh:
         image: ghcr.io/shartge/testssl-web
