@@ -11,10 +11,7 @@
 | GrabImage | Network 1 | Grabs images from api.themoviedb.org |
 | RazorAJAX | REST 2 | Qualities of REST, no connection. Fetch example |
 | Cryptography | Cryptography | AES,DES,3DES,RSA en/decryption, Razor app |
-| OpenID-Keycloak-FormsApp | OpenID | 3 project OpenID demo |
-| OpenID-Keycloak-MVC | OpenID | 3 project OpenID demo |
-| OpenID-Keycloak-MVCAPI | OpenID | 3 project OpenID demo |
 | SendTelegram | Network 3 | Telegram client, full configuration |
 | SignalRChat | Network 4 | Chat system based on SignalR |
-| SocketServer | Network 4 | Berkley client-server dual project solution |
+| TicTacToe | Network 4 | Game |
 | Weatherbunny | Network 1      | http scraper |

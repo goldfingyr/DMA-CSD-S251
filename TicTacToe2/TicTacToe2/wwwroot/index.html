@@ -1,0 +1,73 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Real-Time Tic-Tac-Toe</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        td {
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            font-size: 24px;
+            border: 1px solid #000;
+            cursor: pointer;
+        }
+
+        .player-X {
+            color: blue;
+        }
+
+        .player-O {
+            color: red;
+        }
+    </style>
+</head>
+<body>
+    <h1>Real-Time Tic-Tac-Toe</h1>
+    <table id="board">
+        <tr><td data-x="0" data-y="0"></td><td data-x="0" data-y="1"></td><td data-x="0" data-y="2"></td></tr>
+        <tr><td data-x="1" data-y="0"></td><td data-x="1" data-y="1"></td><td data-x="1" data-y="2"></td></tr>
+        <tr><td data-x="2" data-y="0"></td><td data-x="2" data-y="1"></td><td data-x="2" data-y="2"></td></tr>
+    </table>
+
+    <script>
+                const player = "X"; // Assume the player is "X" (you can change this logic as needed)
+                const connection = new signalR.HubConnectionBuilder()
+                    .withUrl("/gameHub")
+                    .build();
+
+                connection.on("ReceiveMove", (player, x, y) => {
+                    const cell = document.querySelector(`td[data-x="${x}"][data-y="${y}"]`);
+                    cell.textContent = player;
+                    cell.classList.add(`player-${player}`);
+                });
+
+                document.querySelectorAll("td").forEach(cell => {
+                    cell.addEventListener("click", async () => {
+                        if (cell.textContent === "") {
+                            const x = cell.getAttribute("data-x");
+                            const y = cell.getAttribute("data-y");
+                            await connection.invoke("MakeMove", player, parseInt(x), parseInt(y));
+                        }
+                    });
+                });
+
+                async function start() {
+                    try {
+                        await connection.start();
+                        console.log("SignalR connected!");
+                    } catch (err) {
+                        console.error("Error connecting to SignalR: ", err);
+                        setTimeout(start, 5000); // Try to reconnect every 5 seconds
+                    }
+                };
+
+                connection.onclose(start);
+                start();
+    </script>
+</body>
+</html>

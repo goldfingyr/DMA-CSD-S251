@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Tic Tac Toe</title>
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <h1>Tic Tac Toe</h1>
+
+    <input id="room" placeholder="Room" />
+
+    <button onclick="createRoom()">
+        Create
+    </button>
+
+    <button onclick="joinRoom()">
+        Join
+    </button>
+
+    <h3 id="status"></h3>
+
+    <div id="board"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/8.0.0/signalr.min.js"></script>
+    <script src="app.js"></script>
+
+</body>
+</html>
